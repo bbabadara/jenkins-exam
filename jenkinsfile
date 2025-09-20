@@ -1,10 +1,10 @@
 pipeline {
-    agent any  // Exécute sur n'importe quel agent Jenkins
+    agent any  
 
     environment {
         DOCKER_HUB_REPO = 'bbabadara/exam-jenkins' 
         IMAGE_TAG = "latest" 
-        RENDER_SERVICE_ID = 'srv-d36vii8gjchc73br64p0' 
+        RENDER_SERVICE_ID = 'srv-d378bs8gjchc73c28nb0' 
     }
 
     stages {
@@ -39,7 +39,6 @@ pipeline {
         stage('Deploy to Render') {
             steps {
                 script {
-                    // Déclenche un redéploiement sur Render via API
                     sh """
                         curl -X POST \
                             -H "Authorization: Bearer \${render_api}" \
@@ -53,7 +52,6 @@ pipeline {
 
     post {
         always {
-            // Nettoyage
             sh script: 'docker rmi ${DOCKER_HUB_REPO}:${IMAGE_TAG} || true'
         }
         success {
