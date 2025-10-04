@@ -14,7 +14,21 @@ pipeline {
             }
         }
 
-      
+         // 🚨 Étape ajoutée pour SonarQube
+        stage('Analyse SonarQube') {
+            steps {
+                withSonarQubeEnv("${SONARQUBE_ENV}") {
+                    sh '''
+                        sonar-scanner \
+                          -Dsonar.projectKey=test-jenkins \
+                          -Dsonar.sources=. \
+                          -Dsonar.host.url=http://localhost:9000 \
+                          -Dsonar.login=${sonar-token}
+                    '''
+                }
+            }
+        }
+
 
         stage('Build Docker Image') {
             steps {
