@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-         // 🚨 Étape ajoutée pour SonarQube
+         // 🚨 Étape ajoutée pour  SonarQube
         stage('Analyse SonarQube') {
             steps {
                 withSonarQubeEnv('SonarQubeLocal') {
