@@ -17,7 +17,7 @@ pipeline {
          // 🚨 Étape ajoutée pour SonarQube
         stage('Analyse SonarQube') {
             steps {
-                withSonarQubeEnv("${SONARQUBE_ENV}") {
+                withSonarQubeEnv('SonarQubeLocal') {
                     sh '''
                         sonar-scanner \
                           -Dsonar.projectKey=test-jenkins \
