@@ -1,6 +1,8 @@
 pipeline {
     agent any
-   
+   tools {
+        SonarRunner 'default-scanner' 
+    }
     environment {
         DOCKER_HUB_REPO = 'bbabadara/exam-jenkins' 
         IMAGE_TAG = "latest" 
