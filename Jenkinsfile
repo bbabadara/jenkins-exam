@@ -1,8 +1,6 @@
 pipeline {
     agent any
-   tools {
-        sonarRunner 'default-scanner' 
-    }
+ 
     environment {
         DOCKER_HUB_REPO = 'bbabadara/exam-jenkins' 
         IMAGE_TAG = "latest" 
@@ -17,19 +15,19 @@ pipeline {
         }
 
          // 🚨 Étape ajoutée pour  SonarQube
-        stage('Analyse SonarQube') {
-            steps {
-                withSonarQubeEnv('SonarQubeLocal') {
-                    sh '''
-                        sonar-scanner \
-                          -Dsonar.projectKey=test-jenkins \
-                          -Dsonar.sources=. \
-                          -Dsonar.host.url=http://sonarqube:9000 \
-                          -Dsonar.login=${sonar-token}
-                    '''
-                }
-            }
+    stage('Analyse SonarQube') {
+        steps {
+        withSonarQubeEnv('SonarQubeLocal') {
+            sh '''
+                docker run --rm \
+                  -v "$PWD":/usr/src \
+                  -w /usr/src \
+                  --network host \
+                  sonarsource/sonar-scanner-cli:latest
+            '''
         }
+    }
+}
 
 
         stage('Build Docker Image') {
