@@ -1,7 +1,7 @@
 pipeline {
     agent any
    tools {
-        SonarRunner 'default-scanner' 
+        sonarRunner 'default-scanner' 
     }
     environment {
         DOCKER_HUB_REPO = 'bbabadara/exam-jenkins' 
