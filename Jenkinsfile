@@ -16,14 +16,17 @@ pipeline {
 
          // 🚨 Étape ajoutée pour  SonarQube
     stage('Analyse SonarQube') {
-        steps {
+    steps {
         withSonarQubeEnv('SonarQubeLocal') {
             sh '''
                 docker run --rm \
                   -v "$PWD":/usr/src \
                   -w /usr/src \
-                  --network host \
-                  sonarsource/sonar-scanner-cli:latest
+                  --network ci-cd-net \
+                  sonarsource/sonar-scanner-cli:latest \
+                  -Dsonar.projectKey=test-jenkins \
+                  -Dsonar.sources=. \
+                  -Dsonar.host.url=http://sonarqube:9000
             '''
         }
     }
